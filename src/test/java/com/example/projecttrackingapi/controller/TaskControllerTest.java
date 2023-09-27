@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -29,6 +30,22 @@ class TaskControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(toJson(task)))
                 .andExpect(status().isCreated());
+    }
+
+    @Test
+    @SneakyThrows
+    void findTaskById_whenTaskExists_Returns200() {
+        mockMvc.perform(get("/tasks/1")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @SneakyThrows
+    void findTaskById_whenTaskDoesNotExist_Returns404() {
+        mockMvc.perform(get("/tasks/1000")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 
     @SneakyThrows

@@ -5,6 +5,7 @@ import com.example.projecttrackingapi.repository.TaskRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
@@ -17,5 +18,10 @@ public class InMemoryTaskRepository implements TaskRepository {
         task.setId((long) (TASKS.size() + 1));
         TASKS.put(task.getId(), task);
         return task;
+    }
+
+    @Override
+    public Optional<Task> findById(Long id) {
+        return Optional.ofNullable(TASKS.get(id));
     }
 }

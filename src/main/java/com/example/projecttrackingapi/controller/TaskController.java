@@ -5,6 +5,8 @@ import com.example.projecttrackingapi.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,5 +21,13 @@ public class TaskController {
     public ResponseEntity createNewTask(@RequestBody NewTaskRequest request) {
         taskService.createNewTask(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @GetMapping("/tasks/{id}")
+    public ResponseEntity findTaskById(@PathVariable Long id) {
+        var result = taskService.findById(id);
+        return result
+                .map(task -> ResponseEntity.ok().build())
+                .orElse(ResponseEntity.notFound().build());
     }
 }

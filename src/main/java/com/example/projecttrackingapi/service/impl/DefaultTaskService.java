@@ -1,11 +1,14 @@
 package com.example.projecttrackingapi.service.impl;
 
 import com.example.projecttrackingapi.dto.NewTaskRequest;
+import com.example.projecttrackingapi.dto.TaskDto;
 import com.example.projecttrackingapi.model.Task;
 import com.example.projecttrackingapi.repository.TaskRepository;
 import com.example.projecttrackingapi.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,5 +26,17 @@ public class DefaultTaskService implements TaskService {
         model.setStatus(request.status());
 
         taskRepository.save(model);
+    }
+
+    @Override
+    public Optional<TaskDto> findById(Long id) {
+        return taskRepository.findById(id)
+                .map(this::toDto)
+                .map(Optional::of)
+                .orElse(Optional.empty());
+    }
+
+    private TaskDto toDto(Task task) {
+        return new TaskDto(task.getId(), task.getTitle(), task.getDescription(), task.getStoryPoints(), task.getPriority(), task.getStatus());
     }
 }
