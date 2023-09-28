@@ -10,11 +10,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -57,5 +60,17 @@ class DefaultTaskServiceTest {
         var result = taskService.findById(1L);
 
         assertTrue(result.isEmpty());
+    }
+
+    @Test
+    void findAll_whenTaskExists_returnsListWithElements() {
+        var task1 = new Task(1L, "Sample Task 1", "Description 1", 3, "Low", "ToDo");
+        var task2 = new Task(2L, "Sample Task 2", "Description 2", 8, "High", "ToDo");
+        when(taskRepository.findAll(anyInt(), anyInt())).thenReturn(List.of(task1, task2));
+
+        var result = taskService.findAll(0, 2);
+
+        assertNotNull(result);
+        assertEquals(2, result.size());
     }
 }

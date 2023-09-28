@@ -8,6 +8,7 @@ import com.example.projecttrackingapi.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -34,6 +35,14 @@ public class DefaultTaskService implements TaskService {
                 .map(this::toDto)
                 .map(Optional::of)
                 .orElse(Optional.empty());
+    }
+
+    @Override
+    public List<TaskDto> findAll(int page, int size) {
+        return taskRepository.findAll(page, size)
+                .stream()
+                .map(this::toDto)
+                .toList();
     }
 
     private TaskDto toDto(Task task) {

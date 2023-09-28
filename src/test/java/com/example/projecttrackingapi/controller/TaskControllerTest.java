@@ -48,6 +48,14 @@ class TaskControllerTest {
                 .andExpect(status().isNotFound());
     }
 
+    @Test
+    @SneakyThrows
+    void findAll_Returns200() {
+        mockMvc.perform(get("/tasks?page=0&size=2")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
     @SneakyThrows
     private String toJson(NewTaskRequest task) {
         var objectMapper = new ObjectMapper();
