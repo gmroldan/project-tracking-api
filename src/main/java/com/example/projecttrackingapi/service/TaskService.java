@@ -13,4 +13,6 @@ public interface TaskService {
     Optional<TaskDto> findById(Long id);
 
     List<TaskDto> findAll(int page, int size);
+
+    void update(TaskDto taskDto);
 }

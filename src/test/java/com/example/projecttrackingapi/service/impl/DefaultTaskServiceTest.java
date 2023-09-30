@@ -2,6 +2,7 @@ package com.example.projecttrackingapi.service.impl;
 
 import com.example.projecttrackingapi.dto.NewTaskRequest;
 import com.example.projecttrackingapi.dto.TaskDto;
+import com.example.projecttrackingapi.exception.TaskNotFoundException;
 import com.example.projecttrackingapi.model.Task;
 import com.example.projecttrackingapi.repository.TaskRepository;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -72,5 +74,28 @@ class DefaultTaskServiceTest {
 
         assertNotNull(result);
         assertEquals(2, result.size());
+    }
+
+    @Test
+    void update_whenTaskExists_updatesRecord() {
+        var persistedTask = new Task(1L, "Sample Task", "Description", 3, "Low", "ToDo");
+        var updatedTask = new TaskDto(1L, "Sample Task Updated", "Description Updated", 3, "Low", "ToDo");
+
+        when(taskRepository.findById(updatedTask.id()))
+                .thenReturn(Optional.of(persistedTask));
+
+        taskService.update(updatedTask);
+
+        verify(taskRepository, times(1))
+                .save(persistedTask);
+    }
+
+    @Test
+    void update_whenTaskDoesNotExist_throwsException() {
+        var updatedTask = new TaskDto(1L, "Sample Task Updated", "Description Updated", 3, "Low", "ToDo");
+
+        when(taskRepository.findById(updatedTask.id())).thenReturn(Optional.empty());
+
+        assertThrows(TaskNotFoundException.class, () -> taskService.update(updatedTask));
     }
 }

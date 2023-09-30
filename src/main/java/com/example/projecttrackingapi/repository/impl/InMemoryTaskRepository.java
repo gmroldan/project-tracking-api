@@ -14,6 +14,14 @@ public class InMemoryTaskRepository implements TaskRepository {
 
     private static final Map<Long, Task> TASKS = new ConcurrentHashMap<>();
 
+    static {
+        TASKS.put(1L, new Task(1L, "Title #1", "Description #1...", 3, "High", "TODO"));
+        TASKS.put(2L, new Task(2L, "Title #2", "Description #2...", 13, "Low", "TODO"));
+        TASKS.put(3L, new Task(3L, "Title #3", "Description #3...", 5, "Medium", "IN_PROGRESS"));
+        TASKS.put(4L, new Task(4L, "Title #4", "Description #4...", 8, "High", "TODO"));
+        TASKS.put(5L, new Task(5L, "Title #5", "Description #5...", 5, "Low", "DONE"));
+    }
+
     @Override
     public Task save(Task task) {
         task.setId((long) (TASKS.size() + 1));

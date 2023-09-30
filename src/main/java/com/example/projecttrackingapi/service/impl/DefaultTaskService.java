@@ -2,6 +2,7 @@ package com.example.projecttrackingapi.service.impl;
 
 import com.example.projecttrackingapi.dto.NewTaskRequest;
 import com.example.projecttrackingapi.dto.TaskDto;
+import com.example.projecttrackingapi.exception.TaskNotFoundException;
 import com.example.projecttrackingapi.model.Task;
 import com.example.projecttrackingapi.repository.TaskRepository;
 import com.example.projecttrackingapi.service.TaskService;
@@ -47,5 +48,24 @@ public class DefaultTaskService implements TaskService {
 
     private TaskDto toDto(Task task) {
         return new TaskDto(task.getId(), task.getTitle(), task.getDescription(), task.getStoryPoints(), task.getPriority(), task.getStatus());
+    }
+
+    @Override
+    public void update(TaskDto taskDto) {
+        taskRepository.findById(taskDto.id())
+                .ifPresentOrElse(entity -> {
+                    updateEntity(entity, taskDto);
+                    taskRepository.save(entity);
+                }, () -> {
+                    throw new TaskNotFoundException(taskDto.id());
+                });
+    }
+
+    private void updateEntity(Task entity, TaskDto dto) {
+        entity.setTitle(dto.description());
+        entity.setDescription(dto.description());
+        entity.setStoryPoints(dto.storyPoints());
+        entity.setPriority(dto.priority());
+        entity.setStatus(dto.status());
     }
 }
