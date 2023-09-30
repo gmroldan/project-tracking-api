@@ -38,7 +38,7 @@ public class TaskController {
     public ResponseEntity findAll(@RequestParam int page,
                                   @RequestParam int size) {
         var result = taskService.findAll(page, size);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(result);
     }
 
     @PutMapping("/tasks")

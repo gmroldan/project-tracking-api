@@ -4,6 +4,7 @@ import com.example.projecttrackingapi.model.Task;
 import com.example.projecttrackingapi.repository.TaskRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -24,7 +25,11 @@ public class InMemoryTaskRepository implements TaskRepository {
 
     @Override
     public Task save(Task task) {
-        task.setId((long) (TASKS.size() + 1));
+        if (task.getId() == null
+                || !TASKS.containsKey(task.getId())) {
+            task.setId((long) (TASKS.size() + 1));
+        }
+
         TASKS.put(task.getId(), task);
         return task;
     }
@@ -39,17 +44,14 @@ public class InMemoryTaskRepository implements TaskRepository {
         var startIndex = (page - 1) * size;
         var endIndex = Math.min(startIndex + size, TASKS.size());
 
-        if (startIndex <= 0) {
+        if (startIndex >= TASKS.size() || startIndex < 0) {
             return List.of();
         }
 
-        var entries = TASKS.entrySet()
-                .stream()
-                .sorted()
-                .toList();
+        var entries = new ArrayList<>(TASKS.entrySet());
+        var sublist = entries.subList(startIndex, endIndex);
 
-        return entries.subList(startIndex, endIndex)
-                .stream()
+        return sublist.stream()
                 .map(Map.Entry::getValue)
                 .toList();
     }

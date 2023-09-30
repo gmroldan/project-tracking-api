@@ -62,7 +62,7 @@ public class DefaultTaskService implements TaskService {
     }
 
     private void updateEntity(Task entity, TaskDto dto) {
-        entity.setTitle(dto.description());
+        entity.setTitle(dto.tittle());
         entity.setDescription(dto.description());
         entity.setStoryPoints(dto.storyPoints());
         entity.setPriority(dto.priority());
