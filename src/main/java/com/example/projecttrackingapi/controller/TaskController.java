@@ -32,7 +32,7 @@ public class TaskController {
     public ResponseEntity findTaskById(@PathVariable Long id) {
         var result = taskService.findById(id);
         return result
-                .map(task -> ResponseEntity.ok().build())
+                .map(task -> ResponseEntity.ok(task))
                 .orElse(ResponseEntity.notFound().build());
     }
 
