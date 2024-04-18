@@ -1,4 +1,4 @@
 package com.example.projecttrackingapi.dto;
 
-public record NewTaskRequest(String tittle, String description, int storyPoints, String priority, String status) {
+public record NewTaskRequest(String title, String description, int storyPoints, String priority, String status) {
 }

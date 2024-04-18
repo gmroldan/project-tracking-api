@@ -21,7 +21,7 @@ public class DefaultTaskService implements TaskService {
     @Override
     public void createNewTask(NewTaskRequest request) {
         var model = new Task();
-        model.setTitle(request.tittle());
+        model.setTitle(request.title());
         model.setDescription(request.description());
         model.setStoryPoints(request.storyPoints());
         model.setPriority(request.priority());
@@ -47,7 +47,7 @@ public class DefaultTaskService implements TaskService {
     }
 
     private TaskDto toDto(Task task) {
-        return new TaskDto(task.getId(), task.getTitle(), task.getDescription(), task.getStoryPoints(), task.getPriority(), task.getStatus());
+        return new TaskDto(task.getId(), task.getTitle(), task.getDescription(), task.getStoryPoints(), task.getPriority(), task.getStatus(), task.getUserIdAssigned());
     }
 
     @Override

@@ -44,8 +44,8 @@ class DefaultTaskServiceTest {
 
     @Test
     void findById_whenTaskExists_ReturnsTask() {
-        var persistedTask = new Task(1L, "Sample Task", "Description", 3, "Low", "ToDo");
-        var expectedTask = new TaskDto(1L, "Sample Task", "Description", 3, "Low", "ToDo");
+        var persistedTask = new Task(1L, "Sample Task", "Description", 3, "Low", "ToDo", 1L);
+        var expectedTask = new TaskDto(1L, "Sample Task", "Description", 3, "Low", "ToDo", 1L);
 
         when(taskRepository.findById(1L)).thenReturn(Optional.of(persistedTask));
 
@@ -66,8 +66,8 @@ class DefaultTaskServiceTest {
 
     @Test
     void findAll_whenTaskExists_returnsListWithElements() {
-        var task1 = new Task(1L, "Sample Task 1", "Description 1", 3, "Low", "ToDo");
-        var task2 = new Task(2L, "Sample Task 2", "Description 2", 8, "High", "ToDo");
+        var task1 = new Task(1L, "Sample Task 1", "Description 1", 3, "Low", "ToDo", 1L);
+        var task2 = new Task(2L, "Sample Task 2", "Description 2", 8, "High", "ToDo", 1L);
         when(taskRepository.findAll(anyInt(), anyInt())).thenReturn(List.of(task1, task2));
 
         var result = taskService.findAll(0, 2);
@@ -78,8 +78,8 @@ class DefaultTaskServiceTest {
 
     @Test
     void update_whenTaskExists_updatesRecord() {
-        var persistedTask = new Task(1L, "Sample Task", "Description", 3, "Low", "ToDo");
-        var updatedTask = new TaskDto(1L, "Sample Task Updated", "Description Updated", 3, "Low", "ToDo");
+        var persistedTask = new Task(1L, "Sample Task", "Description", 3, "Low", "ToDo", 1L);
+        var updatedTask = new TaskDto(1L, "Sample Task Updated", "Description Updated", 3, "Low", "ToDo", 1L);
 
         when(taskRepository.findById(updatedTask.id()))
                 .thenReturn(Optional.of(persistedTask));
@@ -92,7 +92,7 @@ class DefaultTaskServiceTest {
 
     @Test
     void update_whenTaskDoesNotExist_throwsException() {
-        var updatedTask = new TaskDto(1L, "Sample Task Updated", "Description Updated", 3, "Low", "ToDo");
+        var updatedTask = new TaskDto(1L, "Sample Task Updated", "Description Updated", 3, "Low", "ToDo", 1L);
 
         when(taskRepository.findById(updatedTask.id())).thenReturn(Optional.empty());
 

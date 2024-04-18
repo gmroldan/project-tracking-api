@@ -61,7 +61,7 @@ class TaskControllerTest {
     @Test
     @SneakyThrows
     void updateTask_whenTaskExists_returns200() {
-        var task = new TaskDto(1L, "Sample Task Updated", "Description Updated", 3, "Low", "ToDo");
+        var task = new TaskDto(1L, "Sample Task Updated", "Description Updated", 3, "Low", "ToDo", 1L);
 
         mockMvc.perform(put("/tasks")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -72,7 +72,7 @@ class TaskControllerTest {
     @Test
     @SneakyThrows
     void updateTask_whenTaskDoesNotExist_returns404() {
-        var task = new TaskDto(1000L, "Sample Task Updated", "Description Updated", 3, "Low", "ToDo");
+        var task = new TaskDto(1000L, "Sample Task Updated", "Description Updated", 3, "Low", "ToDo", 1L);
 
         mockMvc.perform(put("/tasks")
                         .contentType(MediaType.APPLICATION_JSON)

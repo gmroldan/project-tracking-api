@@ -14,4 +14,5 @@ public class Task {
     private Integer storyPoints;
     private String priority;
     private String status;
+    private Long userIdAssigned;
 }
