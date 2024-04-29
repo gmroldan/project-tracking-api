@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_tasks_table
+      author: Martin Roldan
+      preConditions:
+        not:
+          tableExists:
+            tableName: tasks
+      changes:
+        - createTable:
+            tableName: tasks
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: text
+              - column:
+                  name: story_points
+                  type: int
+              - column:
+                  name: priority
+                  type: varchar(10)
+              - column:
+                  name: status
+                  type: varchar(15)
+              - column:
+                  name: user_assigned
+                  type: bigint
+
