@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert_mock_data_into_users_table
+      author: Martin Roldan
+      preConditions:
+        onFail: MARK_RAN
+        sqlCheck:
+          expectedResult: 0
+          sql: SELECT COUNT(*) FROM users;
+      changes:
+        - sql:
+            splitStatements: true
+            endDelimiter: ';'
+            sql: |
+              INSERT INTO users (id, username, first_name, last_name) 
+              VALUES 
+              (1, "admin", "Admin", "Admin"),
+              (2, "fmulder", "Fox", "Mulder"),
+              (3, "lsimpson", "Lisa", "Simpson"),
+              (4, "hroldan", "Haru", "Roldan");

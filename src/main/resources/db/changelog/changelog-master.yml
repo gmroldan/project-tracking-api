@@ -9,3 +9,5 @@ databaseChangeLog:
       file: classpath:/db/changelog/2024-05-01-insert-mock-data-into-tasks-table.yml
   - include:
       file: classpath:/db/changelog/2024-05-11-create-users-table.yml
+  - include:
+      file: classpath:/db/changelog/2024-05-11-insert-mock-data-into-users-table.yml
