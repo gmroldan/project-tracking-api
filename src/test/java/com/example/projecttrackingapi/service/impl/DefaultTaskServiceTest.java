@@ -10,6 +10,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -69,7 +70,8 @@ class DefaultTaskServiceTest {
         var task1 = new Task(1L, "Sample Task 1", "Description 1", 3, "Low", "ToDo", 1L);
         var task2 = new Task(2L, "Sample Task 2", "Description 2", 8, "High", "ToDo", 1L);
         //when(taskRepository.findAll(anyInt(), anyInt())).thenReturn(List.of(task1, task2));
-        when(taskRepository.findAll()).thenReturn(List.of(task1, task2));
+        var page = new PageImpl<>(List.of(task1, task2));
+        when(taskRepository.findAll(any(PageRequest.class))).thenReturn(page);
 
         var result = taskService.findAll(0, 2);
 

@@ -37,8 +37,8 @@ public class TaskController {
     }
 
     @GetMapping("/tasks")
-    public ResponseEntity findAll(@RequestParam int page,
-                                  @RequestParam int size) {
+    public ResponseEntity findAll(@RequestParam(defaultValue = "0") int page,
+                                  @RequestParam(defaultValue = "10") int size) {
         var result = taskService.findAll(page, size);
         return ResponseEntity.ok().body(result);
     }

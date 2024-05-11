@@ -7,6 +7,7 @@ import com.example.projecttrackingapi.model.Task;
 import com.example.projecttrackingapi.repository.TaskRepository;
 import com.example.projecttrackingapi.service.TaskService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,8 +41,9 @@ public class DefaultTaskService implements TaskService {
     }
 
     @Override
-    public List<TaskDto> findAll(int page, int size) { // TODO - Implement Pageable
-        return StreamSupport.stream(taskRepository.findAll().spliterator(), false)
+    public List<TaskDto> findAll(int page, int size) {
+        var pageRequest = PageRequest.of(page, size);
+        return StreamSupport.stream(taskRepository.findAll(pageRequest).spliterator(), false)
                 .map(this::toDto)
                 .toList();
     }
