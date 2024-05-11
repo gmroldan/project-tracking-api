@@ -68,7 +68,8 @@ class DefaultTaskServiceTest {
     void findAll_whenTaskExists_returnsListWithElements() {
         var task1 = new Task(1L, "Sample Task 1", "Description 1", 3, "Low", "ToDo", 1L);
         var task2 = new Task(2L, "Sample Task 2", "Description 2", 8, "High", "ToDo", 1L);
-        when(taskRepository.findAll(anyInt(), anyInt())).thenReturn(List.of(task1, task2));
+        //when(taskRepository.findAll(anyInt(), anyInt())).thenReturn(List.of(task1, task2));
+        when(taskRepository.findAll()).thenReturn(List.of(task1, task2));
 
         var result = taskService.findAll(0, 2);
 

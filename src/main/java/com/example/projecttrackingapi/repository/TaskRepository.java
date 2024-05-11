@@ -1,15 +1,7 @@
 package com.example.projecttrackingapi.repository;
 
 import com.example.projecttrackingapi.model.Task;
+import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
-import java.util.Optional;
-
-public interface TaskRepository {
-
-    Task save(Task task);
-
-    Optional<Task> findById(Long id);
-
-    List<Task> findAll(int page, int size);
+public interface TaskRepository extends CrudRepository<Task, Long> {
 }

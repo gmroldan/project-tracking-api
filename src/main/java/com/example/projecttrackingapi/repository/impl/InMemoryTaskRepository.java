@@ -1,8 +1,6 @@
 package com.example.projecttrackingapi.repository.impl;
 
 import com.example.projecttrackingapi.model.Task;
-import com.example.projecttrackingapi.repository.TaskRepository;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +8,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
-@Component
-public class InMemoryTaskRepository implements TaskRepository {
+public class InMemoryTaskRepository {
 
     private static final Map<Long, Task> TASKS = new ConcurrentHashMap<>();
 
@@ -23,7 +20,6 @@ public class InMemoryTaskRepository implements TaskRepository {
         TASKS.put(5L, new Task(5L, "Title #5", "Description #5...", 5, "Low", "DONE", 2L));
     }
 
-    @Override
     public Task save(Task task) {
         if (task.getId() == null
                 || !TASKS.containsKey(task.getId())) {
@@ -34,12 +30,10 @@ public class InMemoryTaskRepository implements TaskRepository {
         return task;
     }
 
-    @Override
     public Optional<Task> findById(Long id) {
         return Optional.ofNullable(TASKS.get(id));
     }
 
-    @Override
     public List<Task> findAll(int page, int size) {
         var startIndex = (page - 1) * size;
         var endIndex = Math.min(startIndex + size, TASKS.size());

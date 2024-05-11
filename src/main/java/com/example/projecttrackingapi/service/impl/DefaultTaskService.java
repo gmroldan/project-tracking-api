@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
@@ -39,15 +40,14 @@ public class DefaultTaskService implements TaskService {
     }
 
     @Override
-    public List<TaskDto> findAll(int page, int size) {
-        return taskRepository.findAll(page, size)
-                .stream()
+    public List<TaskDto> findAll(int page, int size) { // TODO - Implement Pageable
+        return StreamSupport.stream(taskRepository.findAll().spliterator(), false)
                 .map(this::toDto)
                 .toList();
     }
 
     private TaskDto toDto(Task task) {
-        return new TaskDto(task.getId(), task.getTitle(), task.getDescription(), task.getStoryPoints(), task.getPriority(), task.getStatus(), task.getUserIdAssigned());
+        return new TaskDto(task.getId(), task.getTitle(), task.getDescription(), task.getStoryPoints(), task.getPriority(), task.getStatus(), task.getUserAssigned());
     }
 
     @Override
