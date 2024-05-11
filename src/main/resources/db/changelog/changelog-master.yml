@@ -4,8 +4,8 @@ databaseChangeLog:
       author: Martin Roldan
       changes: []
   - include:
-      file: classpath:/db/changelog/30-04-2024-create-tasks-table.yml
+      file: classpath:/db/changelog/2024-04-30-create-tasks-table.yml
   - include:
-      file: classpath:/db/changelog/01-05-2024-insert-mock-data-into-tasks-table.yml
+      file: classpath:/db/changelog/2024-05-01-insert-mock-data-into-tasks-table.yml
   - include:
-      file: classpath:/db/changelog/11-05-2024-create-users-table.yml
+      file: classpath:/db/changelog/2024-05-11-create-users-table.yml
