@@ -7,12 +7,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -28,7 +30,8 @@ class DefaultUserServiceTest {
     void findAll_whenUsersExists_returnsListWithElements() {
         var user1 = new User(1L, "user-test1", "User", "Test 1");
         var user2 = new User(2L, "user-test2", "User", "Test 2");
-        when(userRepository.findAll(anyInt(), anyInt())).thenReturn(List.of(user1, user2));
+        var page = new PageImpl<>(List.of(user1, user2));
+        when(userRepository.findAll(any(Pageable.class))).thenReturn(page);
 
         var result = userService.findAll(0, 2);
 

@@ -16,8 +16,8 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/users")
-    public ResponseEntity findAll(@RequestParam int page,
-                                  @RequestParam int size) {
+    public ResponseEntity findAll(@RequestParam(defaultValue = "0") int page,
+                                  @RequestParam(defaultValue = "10") int size) {
         var result = userService.findAll(page, size);
         return ResponseEntity.ok(result);
     }
