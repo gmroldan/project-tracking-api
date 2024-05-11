@@ -15,10 +15,10 @@ public class InMemoryUserRepository implements UserRepository {
     private static final Map<Long, User> USERS = new ConcurrentHashMap<>();
 
     static {
-        USERS.put(1L, new User(1L, "user-test1", "User Test 1"));
-        USERS.put(2L, new User(2L, "user-test2", "User Test 2"));
-        USERS.put(3L, new User(3L, "user-test3", "User Test 3"));
-        USERS.put(4L, new User(4L, "user-test4", "User Test 4"));
+        USERS.put(1L, new User(1L, "user-test1", "User", "Test 1"));
+        USERS.put(2L, new User(2L, "user-test2", "User", "Test 2"));
+        USERS.put(3L, new User(3L, "user-test3", "User", "Test 3"));
+        USERS.put(4L, new User(4L, "user-test4", "User", "Test 4"));
     }
 
     @Override

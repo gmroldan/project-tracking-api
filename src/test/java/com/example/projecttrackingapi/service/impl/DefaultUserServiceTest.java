@@ -26,8 +26,8 @@ class DefaultUserServiceTest {
 
     @Test
     void findAll_whenUsersExists_returnsListWithElements() {
-        var user1 = new User(1L, "user-test1", "User Test 1");
-        var user2 = new User(2L, "user-test2", "User Test 2");
+        var user1 = new User(1L, "user-test1", "User", "Test 1");
+        var user2 = new User(2L, "user-test2", "User", "Test 2");
         when(userRepository.findAll(anyInt(), anyInt())).thenReturn(List.of(user1, user2));
 
         var result = userService.findAll(0, 2);

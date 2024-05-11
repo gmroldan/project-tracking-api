@@ -24,7 +24,7 @@ public class DefaultUserService implements UserService {
     }
 
     private UserDto toDto(User user) {
-        return new UserDto(user.getId(), user.getUsername(), user.getFullName());
+        return new UserDto(user.getId(), user.getUsername(), user.getFirstName());
     }
 
 }
