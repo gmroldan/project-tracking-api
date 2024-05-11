@@ -1,10 +1,8 @@
 package com.example.projecttrackingapi;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class ProjectTrackingApiApplicationTests {
+class ProjectTrackingApiApplicationTests extends AbstractProjectTrackingApiApplicationTest {
 
 	@Test
 	void contextLoads() {

@@ -17,6 +17,7 @@
 		<java.version>17</java.version>
 		<mysql-connector.version>8.0.33</mysql-connector.version>
 		<liquibase.version>4.27.0</liquibase.version>
+		<mysql-test-container.version>1.19.7</mysql-test-container.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -56,6 +57,12 @@
 		<dependency>
 			<groupId>org.testcontainers</groupId>
 			<artifactId>junit-jupiter</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>mysql</artifactId>
+			<version>${mysql-test-container.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
