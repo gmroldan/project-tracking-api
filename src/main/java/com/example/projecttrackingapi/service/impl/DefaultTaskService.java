@@ -7,12 +7,11 @@ import com.example.projecttrackingapi.model.Task;
 import com.example.projecttrackingapi.repository.TaskRepository;
 import com.example.projecttrackingapi.service.TaskService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
@@ -41,11 +40,10 @@ public class DefaultTaskService implements TaskService {
     }
 
     @Override
-    public List<TaskDto> findAll(int page, int size) {
+    public Page<TaskDto> findAll(int page, int size) {
         var pageRequest = PageRequest.of(page, size);
-        return StreamSupport.stream(taskRepository.findAll(pageRequest).spliterator(), false)
-                .map(this::toDto)
-                .toList();
+        return taskRepository.findAll(pageRequest)
+                .map(this::toDto);
     }
 
     private TaskDto toDto(Task task) {

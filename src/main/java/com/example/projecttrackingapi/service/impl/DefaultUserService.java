@@ -5,11 +5,9 @@ import com.example.projecttrackingapi.model.User;
 import com.example.projecttrackingapi.repository.UserRepository;
 import com.example.projecttrackingapi.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
@@ -18,11 +16,10 @@ public class DefaultUserService implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public List<UserDto> findAll(int page, int size) {
+    public Page<UserDto> findAll(int page, int size) {
         var pageRequest = PageRequest.of(page, size);
-        return StreamSupport.stream(userRepository.findAll(pageRequest).spliterator(), false)
-                .map(this::toDto)
-                .toList();
+        return userRepository.findAll(pageRequest)
+                .map(this::toDto);
     }
 
     private UserDto toDto(User user) {

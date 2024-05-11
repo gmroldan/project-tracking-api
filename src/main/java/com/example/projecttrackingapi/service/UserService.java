@@ -1,10 +1,9 @@
 package com.example.projecttrackingapi.service;
 
 import com.example.projecttrackingapi.dto.UserDto;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 public interface UserService {
 
-    List<UserDto> findAll(int page, int size);
+    Page<UserDto> findAll(int page, int size);
 }
