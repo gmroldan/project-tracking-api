@@ -11,3 +11,5 @@ databaseChangeLog:
       file: classpath:/db/changelog/2024-05-11-create-users-table.yml
   - include:
       file: classpath:/db/changelog/2024-05-11-insert-mock-data-into-users-table.yml
+  - include:
+      file: classpath:/db/changelog/2024-07-23-create-sprints-table.yml

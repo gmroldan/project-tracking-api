@@ -1,0 +1,63 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_sprints_table
+      author: Martin Roldan
+      preConditions:
+        not:
+          tableExists:
+            tableName: sprints
+      changes:
+        - createTable:
+            tableName: sprints
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: start_time
+                  type: datetime
+              - column:
+                  name: end_time
+                  type: datetime
+  - changeSet:
+      id: add_sprint_reference_to_tasks
+      author: Martin Roldan
+      preConditions:
+        not:
+          columnExists:
+            tableName: tasks
+            columnName: sprint_id
+      changes:
+        - addColumn:
+            tableName: tasks
+            columns:
+              - column:
+                  name: sprint_id
+                  type: bigint
+                  constraints:
+                    nullable: true
+
+  - changeSet:
+      id: add_fk_constraint_for_sprint_id
+      author: Martin Roldan
+      preConditions:
+        - columnExists:
+            tableName: tasks
+            columnName: sprint_id
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: tasks
+            baseColumnNames: sprint_id
+            constraintName: fk_tasks_sprint
+            referencedTableName: sprints
+            referencedColumnNames: id
+            onDelete: CASCADE
