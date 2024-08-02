@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert_mock_data_into_sprints_table
+      author: Martin Roldan
+      preConditions:
+        onFail: MARK_RAN
+        sqlCheck:
+          expectedResult: 0
+          sql: SELECT COUNT(*) FROM sprints;
+      changes:
+        - sql:
+            splitStatements: true
+            endDelimiter: ';'
+            sql: |
+              INSERT INTO sprints (title, start_time, end_time) 
+              VALUES 
+              ('1st sprint - kanban', '2024-01-01', NULL);
+  - changeSet:
+      id: update_mocked_tasks_and_relate_them_to_default_sprint
+      author: Martin Roldan
+      preConditions:
+        onFail: MARK_RAN
+        sqlCheck:
+          expectedResult: 0
+          sql: SELECT COUNT(*) FROM tasks WHERE sprint_id = 1;
+      changes:
+        - sql:
+            sql: UPDATE tasks SET sprint_id = 1 WHERE sprint_id is NULL;
