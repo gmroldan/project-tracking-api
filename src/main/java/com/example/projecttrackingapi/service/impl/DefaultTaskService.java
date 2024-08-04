@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -37,6 +38,14 @@ public class DefaultTaskService implements TaskService {
                 .map(this::toDto)
                 .map(Optional::of)
                 .orElse(Optional.empty());
+    }
+
+    @Override
+    public List<TaskDto> findBySprintId(final Long sprintId) {
+        return taskRepository.findBySprintId(sprintId)
+                .stream()
+                .map(this::toDto)
+                .toList();
     }
 
     @Override

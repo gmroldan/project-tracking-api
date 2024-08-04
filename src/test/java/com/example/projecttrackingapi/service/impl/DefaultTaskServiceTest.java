@@ -45,7 +45,7 @@ class DefaultTaskServiceTest {
 
     @Test
     void findById_whenTaskExists_ReturnsTask() {
-        var persistedTask = new Task(1L, "Sample Task", "Description", 3, "Low", "ToDo", 1L);
+        var persistedTask = new Task(1L, "Sample Task", "Description", 3, "Low", "ToDo", 1L, 1L);
         var expectedTask = new TaskDto(1L, "Sample Task", "Description", 3, "Low", "ToDo", 1L);
 
         when(taskRepository.findById(1L)).thenReturn(Optional.of(persistedTask));
@@ -67,9 +67,9 @@ class DefaultTaskServiceTest {
 
     @Test
     void findAll_whenTaskExists_returnsListWithElements() {
-        var task1 = new Task(1L, "Sample Task 1", "Description 1", 3, "Low", "ToDo", 1L);
-        var task2 = new Task(2L, "Sample Task 2", "Description 2", 8, "High", "ToDo", 1L);
-        //when(taskRepository.findAll(anyInt(), anyInt())).thenReturn(List.of(task1, task2));
+        var task1 = new Task(1L, "Sample Task 1", "Description 1", 3, "Low", "ToDo", 1L, 1L);
+        var task2 = new Task(2L, "Sample Task 2", "Description 2", 8, "High", "ToDo", 1L, 1L);
+
         var page = new PageImpl<>(List.of(task1, task2));
         when(taskRepository.findAll(any(PageRequest.class))).thenReturn(page);
 
@@ -82,7 +82,7 @@ class DefaultTaskServiceTest {
 
     @Test
     void update_whenTaskExists_updatesRecord() {
-        var persistedTask = new Task(1L, "Sample Task", "Description", 3, "Low", "ToDo", 1L);
+        var persistedTask = new Task(1L, "Sample Task", "Description", 3, "Low", "ToDo", 1L, 1L);
         var updatedTask = new TaskDto(1L, "Sample Task Updated", "Description Updated", 3, "Low", "ToDo", 1L);
 
         when(taskRepository.findById(updatedTask.id()))
@@ -101,5 +101,18 @@ class DefaultTaskServiceTest {
         when(taskRepository.findById(updatedTask.id())).thenReturn(Optional.empty());
 
         assertThrows(TaskNotFoundException.class, () -> taskService.update(updatedTask));
+    }
+
+    @Test
+    void findSprintId_whenTaskExists_returnsListWithElements() {
+        var task1 = new Task(1L, "Sample Task 1", "Description 1", 3, "Low", "ToDo", 1L, 1L);
+        var task2 = new Task(2L, "Sample Task 2", "Description 2", 8, "High", "ToDo", 1L, 1L);
+
+        when(taskRepository.findBySprintId(1L)).thenReturn(List.of(task1, task2));
+
+        var result = taskService.findBySprintId(1L);
+
+        assertNotNull(result);
+        assertEquals(2, result.size());
     }
 }

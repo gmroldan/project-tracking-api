@@ -23,4 +23,5 @@ public class Task {
     private String priority;
     private String status;
     private Long userAssigned;
+    private Long sprintId;
 }
