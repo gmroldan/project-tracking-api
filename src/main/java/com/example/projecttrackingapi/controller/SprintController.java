@@ -1,5 +1,6 @@
 package com.example.projecttrackingapi.controller;
 
+import com.example.projecttrackingapi.dto.Board;
 import com.example.projecttrackingapi.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +16,9 @@ public class SprintController {
 
     private final TaskService taskService;
 
-    @GetMapping("sprints/{id}/tasks")
+    @GetMapping("sprints/{id}/board")
     public ResponseEntity findSprintTasks(@PathVariable Long id) {
         var tasks = taskService.findBySprintId(id);
-        return ResponseEntity.ok().body(tasks);
+        return ResponseEntity.ok().body(new Board(tasks));
     }
 }

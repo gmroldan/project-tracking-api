@@ -21,7 +21,7 @@ class SprintControllerTest extends AbstractProjectTrackingApiApplicationTest {
     @Test
     @SneakyThrows
     void findSprintTasks_Returns200() {
-        mockMvc.perform(get("/sprints/1/tasks")
+        mockMvc.perform(get("/sprints/1/board")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
