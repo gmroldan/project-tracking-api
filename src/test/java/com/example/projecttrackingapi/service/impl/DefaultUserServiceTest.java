@@ -27,7 +27,7 @@ class DefaultUserServiceTest {
     UserRepository userRepository;
 
     @Test
-    void findAll_whenUsersExists_returnsListWithElements() {
+    void findAllUsingPagination_whenUsersExists_returnsListWithElements() {
         var user1 = new User(1L, "user-test1", "User", "Test 1");
         var user2 = new User(2L, "user-test2", "User", "Test 2");
         var page = new PageImpl<>(List.of(user1, user2));
@@ -38,6 +38,19 @@ class DefaultUserServiceTest {
         assertNotNull(result);
         assertEquals(2, result.getTotalElements());
         assertEquals(1, result.getTotalPages());
+    }
+
+    @Test
+    void findByProject_whenUsersExists_returnsListWithElements() {
+        var user1 = new User(1L, "user-test1", "User", "Test 1");
+        var user2 = new User(2L, "user-test2", "User", "Test 2");
+
+        when(userRepository.findAll()).thenReturn(List.of(user1, user2));
+
+        var result = userService.findByProject(1L);
+
+        assertNotNull(result);
+        assertEquals(2, result.size());
     }
 
 }

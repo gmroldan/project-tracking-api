@@ -9,9 +9,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
-public class DefaultUserService implements UserService {
+class DefaultUserService implements UserService {
 
     private final UserRepository userRepository;
 
@@ -20,6 +22,15 @@ public class DefaultUserService implements UserService {
         var pageRequest = PageRequest.of(page, size);
         return userRepository.findAll(pageRequest)
                 .map(this::toDto);
+    }
+
+    @Override
+    public List<UserDto> findByProject(final Long id) {
+        // TODO - Query repository by projectId or teamId
+        return userRepository.findAll()
+                .stream()
+                .map(this::toDto)
+                .toList();
     }
 
     private UserDto toDto(User user) {
