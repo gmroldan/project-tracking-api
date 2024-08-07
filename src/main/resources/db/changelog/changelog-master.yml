@@ -17,3 +17,5 @@ databaseChangeLog:
       file: classpath:/db/changelog/2024-07-26-insert-mock-data-into-sprints-table.yml
   - include:
       file: classpath:/db/changelog/2024-08-07-create-projects-table.yml
+  - include:
+      file: classpath:/db/changelog/2024-08-07-insert-mock-data-into-projects-table.yml

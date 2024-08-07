@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert_mock_data_into_projects_table
+      author: Martin Roldan
+      preConditions:
+        onFail: MARK_RAN
+        sqlCheck:
+          expectedResult: 0
+          sql: SELECT COUNT(*) FROM projects;
+      changes:
+        - sql:
+            splitStatements: true
+            endDelimiter: ';'
+            sql: |
+              INSERT INTO projects (title) 
+              VALUES 
+              ('Default Project');
+  - changeSet:
+      id: update_mocked_tasks_and_relate_them_to_default_project
+      author: Martin Roldan
+      preConditions:
+        onFail: MARK_RAN
+        sqlCheck:
+          expectedResult: 0
+          sql: SELECT COUNT(*) FROM tasks WHERE project_id = 1;
+      changes:
+        - sql:
+            sql: UPDATE tasks SET project_id = 1 WHERE project_id is NULL;
+
+  - changeSet:
+      id: update_mocked_sprints_and_relate_them_to_default_project
+      author: Martin Roldan
+      preConditions:
+        onFail: MARK_RAN
+        sqlCheck:
+          expectedResult: 0
+          sql: SELECT COUNT(*) FROM sprints WHERE project_id = 1;
+      changes:
+        - sql:
+            sql: UPDATE sprints SET project_id = 1 WHERE project_id is NULL;
