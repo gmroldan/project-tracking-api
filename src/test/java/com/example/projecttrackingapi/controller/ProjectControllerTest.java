@@ -25,4 +25,11 @@ class ProjectControllerTest extends AbstractProjectTrackingApiApplicationTest {
                 .andExpect(status().isOk());
     }
 
+    @Test
+    @SneakyThrows
+    void findSprintTasks_Returns200() {
+        mockMvc.perform(get("/projects/1/board")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
 }
