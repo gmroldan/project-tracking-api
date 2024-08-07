@@ -70,11 +70,12 @@ public class DefaultTaskService implements TaskService {
                 });
     }
 
-    private void updateEntity(Task entity, TaskDto dto) {
+    private void updateEntity(final Task entity, final TaskDto dto) {
         entity.setTitle(dto.title());
         entity.setDescription(dto.description());
         entity.setStoryPoints(dto.storyPoints());
         entity.setPriority(dto.priority());
         entity.setStatus(dto.status());
+        entity.setUserAssigned(dto.userIdAssigned());
     }
 }
