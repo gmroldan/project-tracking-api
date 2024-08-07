@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_teams_table
+      author: Martin Roldan
+      preConditions:
+        not:
+          tableExists:
+            tableName: teams
+      changes:
+        - sql: |
+            CREATE TABLE teams(
+              id BIGINT AUTO_INCREMENT PRIMARY KEY,
+              project_id BIGINT NOT NULL,
+              FOREIGN KEY (project_id) REFERENCES projects(id)
+            );
+  - changeSet:
+      id: create_team_members_table
+      author: Martin Roldan
+      preConditions:
+        not:
+          tableExists:
+            tableName: teams_members
+      changes:
+        - sql: |
+            CREATE TABLE team_members(
+              team_id BIGINT NOT NULL,
+              user_id BIGINT NOT NULL,
+              role VARCHAR(100),
+              PRIMARY KEY (team_id, user_id),
+              FOREIGN KEY (team_id) REFERENCES teams(id),
+              FOREIGN KEY (user_id) REFERENCES users(id)
+            );
