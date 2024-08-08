@@ -25,9 +25,8 @@ class DefaultUserService implements UserService {
     }
 
     @Override
-    public List<UserDto> findByProject(final Long id) {
-        // TODO - Query repository by projectId or teamId
-        return userRepository.findAll()
+    public List<UserDto> findByProject(final Long projectId) {
+        return userRepository.findByProjectId(projectId)
                 .stream()
                 .map(this::toDto)
                 .toList();
