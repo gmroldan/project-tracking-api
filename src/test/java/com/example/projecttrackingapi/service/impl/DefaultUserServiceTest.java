@@ -45,7 +45,7 @@ class DefaultUserServiceTest {
         var user1 = new User(1L, "user-test1", "User", "Test 1");
         var user2 = new User(2L, "user-test2", "User", "Test 2");
 
-        when(userRepository.findAll()).thenReturn(List.of(user1, user2));
+        when(userRepository.findByProjectId(1L)).thenReturn(List.of(user1, user2));
 
         var result = userService.findByProject(1L);
 
