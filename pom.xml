@@ -15,9 +15,9 @@
 	<description>Project Tracking API</description>
 	<properties>
 		<java.version>17</java.version>
-		<mysql-connector.version>8.0.33</mysql-connector.version>
-		<liquibase.version>4.29.0</liquibase.version>
-		<mysql-test-container.version>1.19.7</mysql-test-container.version>
+		<mysql-connector.version>9.0.0</mysql-connector.version>
+		<liquibase.version>4.29.1</liquibase.version>
+		<mysql-test-container.version>1.20.1</mysql-test-container.version>
 		<jwt.version>0.12.6</jwt.version>
 		<lombok.version>1.18.34</lombok.version>
 	</properties>
@@ -42,8 +42,8 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
 			<version>${mysql-connector.version}</version>
 		</dependency>
 		<dependency>
