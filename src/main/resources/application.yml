@@ -5,3 +5,8 @@ spring:
     password: 123456
   liquibase:
     change-log: classpath:db/changelog/changelog-master.yml
+
+security:
+  jwt:
+    secret-key: MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDE=
+    expiration-time: 3600000

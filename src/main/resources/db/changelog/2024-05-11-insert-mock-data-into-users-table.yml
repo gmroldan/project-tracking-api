@@ -12,9 +12,9 @@ databaseChangeLog:
             splitStatements: true
             endDelimiter: ';'
             sql: |
-              INSERT INTO users (id, username, first_name, last_name) 
+              INSERT INTO users (id, username, first_name, last_name, password) 
               VALUES 
-              (1, "admin", "Admin", "Admin"),
-              (2, "fmulder", "Fox", "Mulder"),
-              (3, "lsimpson", "Lisa", "Simpson"),
-              (4, "hroldan", "Haru", "Roldan");
+              (1, "admin", "Admin", "Admin", "$2y$10$WKa48xj8o5NNakxkrTH07easXVlaQO7fG7gW5XHJ75shDtM0/e9Ci"),
+              (2, "fmulder", "Fox", "Mulder", "$2y$10$WKa48xj8o5NNakxkrTH07easXVlaQO7fG7gW5XHJ75shDtM0/e9Ci"),
+              (3, "lsimpson", "Lisa", "Simpson", "$2y$10$WKa48xj8o5NNakxkrTH07easXVlaQO7fG7gW5XHJ75shDtM0/e9Ci"),
+              (4, "hroldan", "Haru", "Roldan", "$2y$10$WKa48xj8o5NNakxkrTH07easXVlaQO7fG7gW5XHJ75shDtM0/e9Ci");

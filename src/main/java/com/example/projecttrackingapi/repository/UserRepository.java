@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
@@ -14,4 +15,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
                     "INNER JOIN teams t ON t.id = tm.team_id " +
                     "WHERE t.project_id = :projectId")
     List<User> findByProjectId(Long projectId);
+
+    Optional<User> findByUsername(String username);
 }
