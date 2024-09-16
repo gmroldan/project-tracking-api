@@ -46,6 +46,6 @@ class DefaultUserService implements UserService, AuthenticationService {
         return userRepository.findByUsername(credentials.user())
                 .filter(u -> passwordEncoder.matches(credentials.password(), u.getPassword()))
                 .map(this::toDto)
-                .orElseThrow(() -> new UserPassCombinationException());
+                .orElseThrow(UserPassCombinationException::new);
     }
 }

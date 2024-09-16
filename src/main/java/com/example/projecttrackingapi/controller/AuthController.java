@@ -19,7 +19,7 @@ public class AuthController {
     private final AuthenticationService userService;
     private final JwtUtil jwtUtil;
 
-    @PostMapping(value = "/login")
+    @PostMapping("/login")
     public ResponseEntity<LoginResponseDto> login(@RequestBody CredentialsDto credentials) {
         final var user = userService.login(credentials);
         final var jwtToken = jwtUtil.createToken(user);
