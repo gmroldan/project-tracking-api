@@ -35,9 +35,7 @@ public class DefaultTaskService implements TaskService {
     @Override
     public Optional<TaskDto> findById(Long id) {
         return taskRepository.findById(id)
-                .map(this::toDto)
-                .map(Optional::of)
-                .orElse(Optional.empty());
+                .flatMap(entity -> Optional.of(toDto(entity)));
     }
 
     @Override
