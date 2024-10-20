@@ -12,9 +12,14 @@ databaseChangeLog:
             splitStatements: true
             endDelimiter: ';'
             sql: |
-              INSERT INTO teams (project_id) 
+              INSERT INTO teams (name, project_id) 
               VALUES 
-              (1);
+              ('talent-pool', NULL),
+              ('platform-backend', 1),
+              ('platform-ui', NULL),
+              ('payments', NULL),
+              ('qa-automation', NULL),
+              ('qa-performance', NULL);
   - changeSet:
       id: insert_mock_data_into_team_members_table
       author: Martin Roldan
