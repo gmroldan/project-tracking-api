@@ -23,6 +23,14 @@ public class DefaultTeamService implements TeamService {
                 .toList();
     }
 
+    @Override
+    public void createNewTeam(TeamDto teamDto) {
+        var team = new Team();
+        team.setName(teamDto.name());
+
+        teamRepository.save(team);
+    }
+
     private TeamDto mapToDto(final Team team) {
         return new TeamDto(team.getId(), team.getName());
     }

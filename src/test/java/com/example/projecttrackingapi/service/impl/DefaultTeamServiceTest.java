@@ -12,6 +12,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -40,6 +42,15 @@ class DefaultTeamServiceTest {
         var result = defaultTeamService.findAllTeams();
 
         assertEquals(expectedResult, result);
+    }
+
+    @Test
+    void createNewTeam_SavesNewTeam() {
+        var newTeam = new TeamDto(null, "Test 1");
+
+        defaultTeamService.createNewTeam(newTeam);
+
+        verify(teamRepository).save(any(Team.class));
     }
 
 }
