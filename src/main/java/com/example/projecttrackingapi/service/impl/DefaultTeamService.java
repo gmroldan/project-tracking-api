@@ -1,7 +1,9 @@
 package com.example.projecttrackingapi.service.impl;
 
 import com.example.projecttrackingapi.dto.TeamDto;
+import com.example.projecttrackingapi.dto.TeamMemberDto;
 import com.example.projecttrackingapi.model.Team;
+import com.example.projecttrackingapi.model.TeamMember;
 import com.example.projecttrackingapi.repository.TeamRepository;
 import com.example.projecttrackingapi.service.TeamService;
 import lombok.RequiredArgsConstructor;
@@ -25,13 +27,31 @@ public class DefaultTeamService implements TeamService {
 
     @Override
     public void createNewTeam(TeamDto teamDto) {
-        var team = new Team();
-        team.setName(teamDto.name());
+        var team = mapToEntity(teamDto);
 
         teamRepository.save(team);
     }
 
     private TeamDto mapToDto(final Team team) {
-        return new TeamDto(team.getId(), team.getName());
+        return new TeamDto(team.getId(), team.getName(), List.of());
+    }
+
+    private Team mapToEntity(final TeamDto teamDto) {
+        var teamMembers = mapToEntity(teamDto.members());
+        var team = new Team();
+        team.setName(teamDto.name());
+        team.setTeamMembers(teamMembers);
+
+        return team;
+    }
+
+    private List<TeamMember> mapToEntity(final List<TeamMemberDto> membersDto) {
+        return membersDto.stream()
+                .map(this::mapToEntity)
+                .toList();
+    }
+
+    private TeamMember mapToEntity(final TeamMemberDto dto) {
+        return new TeamMember(dto.id(), dto.role());
     }
 }

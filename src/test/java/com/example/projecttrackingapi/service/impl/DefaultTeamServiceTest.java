@@ -1,7 +1,9 @@
 package com.example.projecttrackingapi.service.impl;
 
 import com.example.projecttrackingapi.dto.TeamDto;
+import com.example.projecttrackingapi.dto.TeamMemberDto;
 import com.example.projecttrackingapi.model.Team;
+import com.example.projecttrackingapi.model.TeamMember;
 import com.example.projecttrackingapi.repository.TeamRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,13 +30,13 @@ class DefaultTeamServiceTest {
     @Test
     void findAllTeams_WhenTeamsExistInDB_ReturnsListOfTeams() {
         var teamsStored = List.of(
-                new Team(1L, "Test Team 1"),
-                new Team(2L, "Test Team 2")
+                new Team(1L, "Test Team 1", List.of()),
+                new Team(2L, "Test Team 2", List.of())
         );
 
         var expectedResult = List.of(
-                new TeamDto(1L, "Test Team 1"),
-                new TeamDto(2L, "Test Team 2")
+                new TeamDto(1L, "Test Team 1", List.of()),
+                new TeamDto(2L, "Test Team 2", List.of())
         );
 
         when(teamRepository.findAll()).thenReturn(teamsStored);
@@ -46,7 +48,7 @@ class DefaultTeamServiceTest {
 
     @Test
     void createNewTeam_SavesNewTeam() {
-        var newTeam = new TeamDto(null, "Test 1");
+        var newTeam = new TeamDto(null, "Test 1", List.of());
 
         defaultTeamService.createNewTeam(newTeam);
 

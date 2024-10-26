@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.example.projecttrackingapi.AbstractProjectTrackingApiApplicationTest;
 import com.example.projecttrackingapi.dto.TeamDto;
+import com.example.projecttrackingapi.dto.TeamMemberDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.List;
 
 @AutoConfigureMockMvc
 class TeamControllerTest extends AbstractProjectTrackingApiApplicationTest {
@@ -31,7 +34,7 @@ class TeamControllerTest extends AbstractProjectTrackingApiApplicationTest {
     @Test
     @SneakyThrows
     void createNewTeam_Returns200() {
-        var newTeam = new TeamDto(null, "Test team");
+        var newTeam = new TeamDto(null, "Test team", List.of(new TeamMemberDto(1L, "Developer")));
 
         mockMvc.perform(post("/teams")
                         .contentType(MediaType.APPLICATION_JSON)
