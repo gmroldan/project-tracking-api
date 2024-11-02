@@ -1,9 +1,8 @@
 package com.example.projecttrackingapi.service.impl;
 
+import com.example.projecttrackingapi.dto.NewTeamRequest;
 import com.example.projecttrackingapi.dto.TeamDto;
-import com.example.projecttrackingapi.dto.TeamMemberDto;
 import com.example.projecttrackingapi.model.Team;
-import com.example.projecttrackingapi.model.TeamMember;
 import com.example.projecttrackingapi.repository.TeamRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -48,7 +47,7 @@ class DefaultTeamServiceTest {
 
     @Test
     void createNewTeam_SavesNewTeam() {
-        var newTeam = new TeamDto(null, "Test 1", List.of());
+        var newTeam = new NewTeamRequest("Test 1", List.of());
 
         defaultTeamService.createNewTeam(newTeam);
 

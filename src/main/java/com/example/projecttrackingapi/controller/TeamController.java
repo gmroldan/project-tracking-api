@@ -1,5 +1,6 @@
 package com.example.projecttrackingapi.controller;
 
+import com.example.projecttrackingapi.dto.NewTeamRequest;
 import com.example.projecttrackingapi.dto.TeamDto;
 import com.example.projecttrackingapi.service.TeamService;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +24,8 @@ public class TeamController {
     }
 
     @PostMapping("/teams")
-    public ResponseEntity<Object> createNewTeam(@RequestBody TeamDto teamDto) {
-        teamService.createNewTeam(teamDto);
+    public ResponseEntity<Object> createNewTeam(@RequestBody NewTeamRequest request) {
+        teamService.createNewTeam(request);
         return ResponseEntity.ok().build();
     }
 }

@@ -1,5 +1,6 @@
 package com.example.projecttrackingapi.service.impl;
 
+import com.example.projecttrackingapi.dto.NewTeamRequest;
 import com.example.projecttrackingapi.dto.TeamDto;
 import com.example.projecttrackingapi.dto.TeamMemberDto;
 import com.example.projecttrackingapi.model.Team;
@@ -26,8 +27,8 @@ public class DefaultTeamService implements TeamService {
     }
 
     @Override
-    public void createNewTeam(TeamDto teamDto) {
-        var team = mapToEntity(teamDto);
+    public void createNewTeam(final NewTeamRequest request) {
+        var team = mapToEntity(request);
 
         teamRepository.save(team);
     }
@@ -36,7 +37,7 @@ public class DefaultTeamService implements TeamService {
         return new TeamDto(team.getId(), team.getName(), List.of());
     }
 
-    private Team mapToEntity(final TeamDto teamDto) {
+    private Team mapToEntity(final NewTeamRequest teamDto) {
         var teamMembers = mapToEntity(teamDto.members());
         var team = new Team();
         team.setName(teamDto.name());
