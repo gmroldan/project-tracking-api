@@ -42,6 +42,22 @@ class TeamControllerTest extends AbstractProjectTrackingApiApplicationTest {
                 .andExpect(status().isOk());
     }
 
+    @Test
+    @SneakyThrows
+    void findById_WhenTeamExists_Returns200() {
+        mockMvc.perform(get("/teams/1")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @SneakyThrows
+    void findById_WhenTeamDoesNotExist_Returns404() {
+        mockMvc.perform(get("/teams/1000")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
     @SneakyThrows
     private String toJson(final TeamDto team) {
         var objectMapper = new ObjectMapper();

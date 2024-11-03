@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,8 +34,21 @@ public class DefaultTeamService implements TeamService {
         teamRepository.save(team);
     }
 
+    @Override
+    public Optional<TeamDto> findById(final Long id) {
+        return teamRepository.findById(id).map(this::mapToDto);
+    }
+
     private TeamDto mapToDto(final Team team) {
-        return new TeamDto(team.getId(), team.getName(), List.of());
+        return new TeamDto(team.getId(), team.getName(), mapToDto(team.getTeamMembers()));
+    }
+
+    private List<TeamMemberDto> mapToDto(final List<TeamMember> teamMembers) {
+        return teamMembers.stream().map(this::mapToDto).toList();
+    }
+
+    private TeamMemberDto mapToDto(final TeamMember teamMember) {
+        return new TeamMemberDto(teamMember.getUserId(), teamMember.getRole());
     }
 
     private Team mapToEntity(final NewTeamRequest teamDto) {
