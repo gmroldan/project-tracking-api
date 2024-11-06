@@ -13,4 +13,6 @@ public interface TeamService {
     void createNewTeam(NewTeamRequest request);
 
     Optional<TeamDto> findById(Long id);
+
+    void updateTeam(TeamDto request);
 }

@@ -12,12 +12,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -78,6 +81,32 @@ class DefaultTeamServiceTest {
         var result = defaultTeamService.findById(1L);
 
         assertTrue(result.isEmpty());
+    }
+
+    @Test
+    void updateTeam_WhenTeamExistsInDB_UpdatesExistingRecord() {
+        List<TeamMember> storedTeamMembers = new ArrayList<>();
+        storedTeamMembers.add(new TeamMember(22L, "Developer"));
+        var team1 = new Team(1L, "Test Team 1", storedTeamMembers);
+        var request = new TeamDto(1L, "Test Team 1 - Modified", List.of(new TeamMemberDto(22L, "QA")));
+        var expectedUpdatedEntity = new Team(1L, "Test Team 1 - Modified", List.of(new TeamMember(22L, "QA")));
+
+        when(teamRepository.findById(1L)).thenReturn(Optional.of(team1));
+
+        defaultTeamService.updateTeam(request);
+
+        verify(teamRepository).save(expectedUpdatedEntity);
+    }
+
+    @Test
+    void updateTeam_WhenTeamDoesNotExistInDB_ThrowsException() {
+        var request = new TeamDto(1L, "Test Team 1 - Modified", List.of(new TeamMemberDto(22L, "QA")));
+
+        when(teamRepository.findById(1L)).thenReturn(Optional.empty());
+
+        assertThrows(RuntimeException.class, () -> defaultTeamService.updateTeam(request));
+
+        verify(teamRepository, never()).save(any());
     }
 
 }
