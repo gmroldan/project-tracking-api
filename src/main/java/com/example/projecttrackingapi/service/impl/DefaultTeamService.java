@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,15 +46,31 @@ public class DefaultTeamService implements TeamService {
         final var storedTeam = teamRepository.findById(request.id())
                 .orElseThrow(() -> new RuntimeException("Team does not exist"));
 
-        final var newTeamMembers = request.members()
-                .stream()
-                .collect(Collectors.toMap(TeamMemberDto::id, TeamMemberDto::role));
-
         storedTeam.setName(request.name());
-        storedTeam.getTeamMembers().removeIf(teamMember -> !newTeamMembers.containsKey(teamMember.getUserId()));
-        storedTeam.getTeamMembers().forEach(teamMember -> teamMember.setRole(newTeamMembers.getOrDefault(teamMember.getUserId(), "DEFAULT_ROLE")));
+        syncTeamMembers(storedTeam, request.members());
 
         teamRepository.save(storedTeam);
+    }
+
+    private void syncTeamMembers(Team storedTeam, List<TeamMemberDto> members) {
+        var newTeamMembers = members.stream()
+                .map(this::mapToEntity)
+                .collect(Collectors.toMap(TeamMember::getUserId, Function.identity()));
+
+        var currentTeamMembersMap = storedTeam.getTeamMembers()
+                .stream()
+                .collect(Collectors.toMap(TeamMember::getUserId, Function.identity()));
+
+        storedTeam.getTeamMembers().removeIf(storedTeamMember -> !newTeamMembers.containsKey(storedTeamMember.getUserId()));
+
+        newTeamMembers.forEach((key, value) -> {
+            var existingTeamMember = currentTeamMembersMap.get(key);
+            if (existingTeamMember == null) {
+                storedTeam.getTeamMembers().add(value);
+            } else {
+                existingTeamMember.setRole(value.getRole());
+            }
+        });
     }
 
 

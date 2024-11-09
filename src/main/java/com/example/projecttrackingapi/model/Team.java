@@ -1,5 +1,6 @@
 package com.example.projecttrackingapi.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -11,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "teams")
@@ -24,7 +26,7 @@ public class Team {
     private Long id;
     private String name;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "team_id")
-    private List<TeamMember> teamMembers;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "team_id", nullable = false)
+    private List<TeamMember> teamMembers = new ArrayList<>();
 }
