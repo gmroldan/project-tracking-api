@@ -38,6 +38,14 @@ class ProjectControllerTest extends AbstractProjectTrackingApiApplicationTest {
 
     @SneakyThrows
     @Test
+    void findAllProjects_Returns200() {
+        mockMvc.perform(get("/projects")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @SneakyThrows
+    @Test
     void createNewProject_Returns200() {
         var newProject = new NewProjectRequest("test project 1");
 

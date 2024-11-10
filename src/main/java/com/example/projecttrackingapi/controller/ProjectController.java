@@ -2,6 +2,7 @@ package com.example.projecttrackingapi.controller;
 
 import com.example.projecttrackingapi.dto.Board;
 import com.example.projecttrackingapi.dto.NewProjectRequest;
+import com.example.projecttrackingapi.dto.ProjectDto;
 import com.example.projecttrackingapi.dto.UserDto;
 import com.example.projecttrackingapi.service.ProjectService;
 import com.example.projecttrackingapi.service.TaskService;
@@ -30,7 +31,7 @@ public class ProjectController {
         return ResponseEntity.ok(users);
     }
 
-    @GetMapping("projects/{id}/board")
+    @GetMapping("/projects/{id}/board")
     public ResponseEntity<Board> findCurrentSprintBoard(@PathVariable Long id) {
         var tasks = taskService.findBySprintId(id);
         return ResponseEntity.ok().body(new Board(tasks));
@@ -40,5 +41,11 @@ public class ProjectController {
     public ResponseEntity<Object> createNewProject(@RequestBody NewProjectRequest request) {
         projectService.createNewProject(request);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/projects")
+    public ResponseEntity<List<ProjectDto>> findAllProjects() {
+        var projects = projectService.findAll();
+        return ResponseEntity.ok(projects);
     }
 }
