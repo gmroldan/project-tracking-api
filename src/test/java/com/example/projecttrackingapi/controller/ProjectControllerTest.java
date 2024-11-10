@@ -1,9 +1,12 @@
 package com.example.projecttrackingapi.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.projecttrackingapi.AbstractProjectTrackingApiApplicationTest;
+import com.example.projecttrackingapi.dto.NewProjectRequest;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +34,22 @@ class ProjectControllerTest extends AbstractProjectTrackingApiApplicationTest {
         mockMvc.perform(get("/projects/1/board")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+    }
+
+    @SneakyThrows
+    @Test
+    void createNewProject_Returns200() {
+        var newProject = new NewProjectRequest("test project 1");
+
+        mockMvc.perform(post("/projects")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(toJson(newProject)))
+                .andExpect(status().isOk());
+    }
+
+    @SneakyThrows
+    private String toJson(final NewProjectRequest request) {
+        var objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(request);
     }
 }
