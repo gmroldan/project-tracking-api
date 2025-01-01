@@ -36,6 +36,6 @@ class DefaultProjectService implements ProjectService {
     }
 
     private Project mapToEntity(final NewProjectRequest request) {
-        return new Project(null, request.projectTitle());
+        return new Project(null, request.title());
     }
 }

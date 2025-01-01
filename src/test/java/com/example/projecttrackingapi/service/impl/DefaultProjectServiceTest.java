@@ -30,7 +30,7 @@ class DefaultProjectServiceTest {
     void createNewProject_WhenProjectDoesNotExist_StoresNewProject() {
         var request = new NewProjectRequest("test project");
         var expectedEntity = new Project();
-        expectedEntity.setTitle(request.projectTitle());
+        expectedEntity.setTitle(request.title());
 
         projectService.createNewProject(request);
 
