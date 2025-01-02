@@ -37,6 +37,16 @@ class DefaultProjectService implements ProjectService {
         return projectRepository.findById(id).map(this::mapToDto);
     }
 
+    @Override
+    public void updateProject(final ProjectDto request) {
+        final var storedProject = projectRepository.findById(request.id())
+                .orElseThrow(() -> new RuntimeException("Project does not exist"));
+
+        storedProject.setTitle(request.title());
+
+        projectRepository.save(storedProject);
+    }
+
     private ProjectDto mapToDto(Project project) {
         return new ProjectDto(project.getId(), project.getTitle());
     }

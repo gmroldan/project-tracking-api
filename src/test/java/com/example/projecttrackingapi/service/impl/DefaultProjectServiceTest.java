@@ -14,7 +14,10 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -85,5 +88,29 @@ class DefaultProjectServiceTest {
         var result = projectService.findById(3L);
 
         assertTrue(result.isEmpty());
+    }
+
+    @Test
+    void updateProject_WhenProjectExists_UpdatesExistingRecord() {
+        var request = new ProjectDto(11L, "Modified");
+        var storedProject = new Project(11L, "Original Title");
+        var expectedUpdatedEntity = new Project(11L, "Modified");
+
+        when(projectRepository.findById(11L)).thenReturn(Optional.of(storedProject));
+
+        projectService.updateProject(request);
+
+        verify(projectRepository).save(expectedUpdatedEntity);
+    }
+
+    @Test
+    void updateProject_WhenProjectDoesNotExist_ThrowsException() {
+        var request = new ProjectDto(11L, "Modified");
+
+        when(projectRepository.findById(request.id())).thenReturn(Optional.empty());
+
+        assertThrows(RuntimeException.class, () -> projectService.updateProject(request));
+
+        verify(projectRepository, never()).save(any());
     }
 }

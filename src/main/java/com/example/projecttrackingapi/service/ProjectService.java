@@ -13,4 +13,6 @@ public interface ProjectService {
     List<ProjectDto> findAll();
 
     Optional<ProjectDto> findById(Long id);
+
+    void updateProject(ProjectDto request);
 }
