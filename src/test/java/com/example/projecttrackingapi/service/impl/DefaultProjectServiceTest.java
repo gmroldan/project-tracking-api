@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -61,6 +62,27 @@ class DefaultProjectServiceTest {
         when(projectRepository.findAll()).thenReturn(List.of());
 
         var result = projectService.findAll();
+
+        assertTrue(result.isEmpty());
+    }
+
+    @Test
+    void findById_WhenProjectExists_ReturnsOptionalWithProject() {
+        var expectedProject = new ProjectDto(3L, "Test Project");
+
+        when(projectRepository.findById(3L)).thenReturn(Optional.of(new Project(3L, "Test Project")));
+
+        var result = projectService.findById(3L);
+
+        assertTrue(result.isPresent());
+        assertEquals(expectedProject, result.get());
+    }
+
+    @Test
+    void findById_WhenProjectDoesNotExist_ReturnsEmptyOptional() {
+        when(projectRepository.findById(3L)).thenReturn(Optional.empty());
+
+        var result = projectService.findById(3L);
 
         assertTrue(result.isEmpty());
     }

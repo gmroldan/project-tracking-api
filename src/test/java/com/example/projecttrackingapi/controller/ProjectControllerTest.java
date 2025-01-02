@@ -55,6 +55,22 @@ class ProjectControllerTest extends AbstractProjectTrackingApiApplicationTest {
                 .andExpect(status().isOk());
     }
 
+    @Test
+    @SneakyThrows
+    void findProjectById_WhenProjectExists_Returns200() {
+        mockMvc.perform(get("/projects/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @SneakyThrows
+    void findProjectById_WhenProjectDoesNotExist_Returns404() {
+        mockMvc.perform(get("/projects/10000")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
     @SneakyThrows
     private String toJson(final NewProjectRequest request) {
         var objectMapper = new ObjectMapper();

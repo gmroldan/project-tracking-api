@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +30,11 @@ class DefaultProjectService implements ProjectService {
                 .stream()
                 .map(this::mapToDto)
                 .toList();
+    }
+
+    @Override
+    public Optional<ProjectDto> findById(Long id) {
+        return projectRepository.findById(id).map(this::mapToDto);
     }
 
     private ProjectDto mapToDto(Project project) {
